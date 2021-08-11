@@ -13,7 +13,7 @@ redis-sentinel集群的安装
 
 ## Requirements
 
-目前仅使用与centos7系列的环境
+目前仅适用centos7系列的环境
 
 ## Role Variables
 
@@ -35,7 +35,7 @@ SENTINEL_DATA: /usr/local/redis/sentinel_data
 
 ## INVENTORY文件定义
 
-本实例为做免密，正式环境请自行免密
+本实例未做免密，正式环境请自行免密
 
 ### redis单节点安装
 
