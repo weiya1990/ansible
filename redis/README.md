@@ -121,6 +121,7 @@ ansible-playbook -i hosts_sentinel   -e redis_master_host=192.168.1.12 -e redis_
 ![image](https://user-images.githubusercontent.com/38902618/128983725-c76357fc-1cf0-4024-be8e-a8d7136a2e61.png)
 ![image](https://user-images.githubusercontent.com/38902618/128983877-a76aa61a-7d5c-4503-a38f-f11f8fdc1a97.png)
 
+![image](https://user-images.githubusercontent.com/38902618/128984098-372663a5-ecd2-4a2f-a330-45003823682b.png)
 
 
 License
