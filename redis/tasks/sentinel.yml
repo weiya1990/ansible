@@ -1,0 +1,45 @@
+---
+- name: 查看sentinel_status变量状态
+  debug:
+    msg: "{{ sentinel_status }}"
+  when: sentinel_status is defined
+
+- name: 创建sentinel数据目录
+  file:
+    path: "{{ SENTINEL_DATA }}"
+    state: directory
+  when: 
+  - sentinel_status is defined
+  - sentinel_status == "install"  
+
+- name: 配置sentinel
+  template:
+    src: sentinel.conf.j2
+    dest: "{{ SENTINEL_DATA }}/sentinel-{{ SENTINEL_PORT }}.conf"
+  when:
+  - sentinel_status is defined
+  - sentinel_status == "install"
+
+
+- name: 注册sentinel服务
+  template:
+    src: sentinel.service.j2
+    dest: "/usr/lib/systemd/system/sentinel-{{ SENTINEL_PORT }}.service"
+  when:
+  - sentinel_status is defined
+  - sentinel_status == "install"
+
+#- name: 重载systemd服务
+#  command:
+#    cmd: systemctl daemon-reload
+
+- name: 启动sentinel服务
+  systemd: 
+    name: "sentinel-{{ SENTINEL_PORT }}"
+    daemon_reload: yes
+    enabled: yes
+    state: restarted
+  when:
+  - sentinel_status is defined
+  - sentinel_status == "install"
+

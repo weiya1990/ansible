@@ -1,0 +1,50 @@
+---
+# tasks file for redis
+
+- name: 判断redis是否已经安装
+  stat: 
+    path: "{{ REDIS_HOME }}/bin/redis-server"
+  connection: local
+  register: redis_bin_file
+
+- name: 查看变量
+  debug:
+    msg: "{{ redis_bin_file }}"
+
+- name: 下载安装包
+  unarchive:
+    src: redis-5.0.13.tar.gz
+    dest: /usr/local/src
+  when: redis_bin_file.stat.exists == "false"
+
+- name: 安装编译环境
+  yum:
+    name: [cmake, gcc]
+    state: installed
+  when: redis_bin_file.stat.exists == "false"
+
+- name: 编译安装redis
+  shell:
+    chdir:  /usr/local/src/redis-5.0.13/
+    cmd: "make && make PREFIX={{ REDIS_HOME }} install"
+  when: redis_bin_file.stat.exists == "false"
+
+- name: 配置启动脚本
+  template:
+    src: redis.j2
+    dest: "/usr/lib/systemd/system/redis-{{ REDIS_PORT }}.service"
+    mode: 755
+
+- name: 配置文件修改
+  template:
+    src: redis.conf.j2
+    dest: "{{ REDIS_HOME }}/redis-{{ REDIS_PORT }}.conf"
+
+- name: 启动redis服务
+  systemd: 
+    name: "redis-{{ REDIS_PORT }}"
+    daemon_reload: yes
+    enabled: yes
+    state: restarted
+
+   

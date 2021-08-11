@@ -1,0 +1,12 @@
+[Unit]
+Description=redis-server
+After=network.target
+
+[Service]
+Type=forking
+ExecStart={{ REDIS_HOME }}/bin/redis-server {{ REDIS_HOME }}/redis-{{ REDIS_PORT }}.conf
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
+

@@ -1,0 +1,9 @@
+---
+# defaults file for reredis1-port
+REDIS_PORT: 6379
+REDIS_PASSWD: 1qaz2wsx
+REDIS_HOME: /usr/local/redis
+#redis-sentinel配置
+SENTINEL_PORT: 16379
+SENTINEL_DATA: /usr/local/redis/sentinel_data
+

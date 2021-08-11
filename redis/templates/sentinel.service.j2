@@ -1,0 +1,12 @@
+[Unit]
+Description=redis-sentinel
+After=network.target
+
+[Service]
+Type=forking
+ExecStart={{ REDIS_HOME }}/bin/redis-sentinel {{ SENTINEL_DATA }}/sentinel-{{ SENTINEL_PORT }}.conf
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
+

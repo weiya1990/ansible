@@ -1,0 +1,24 @@
+daemonize yes
+
+port {{  SENTINEL_PORT }} 
+#自定义sentinel端口
+
+dir {{ SENTINEL_DATA }} 
+
+logfile "/var/log/redis_sentinel-{{ SENTINEL_PORT }}.log" 
+#日志文件
+
+sentinel monitor mymaster {{ redis_master_host }} {{ redis_master_port }} 2 
+#2代表判断主节点失败至少需要2个Sentinel节点节点同意
+
+sentinel auth-pass mymaster {{ REDIS_PASSWD }} 
+# 主节点设置的密码
+
+sentinel parallel-syncs mymaster 1 
+#当Sentinel节点集合对主节点故障判定达成一致时，Sentinel领导者节点会做故障转移操作，选出新的主节点，原来的从节点会向新的主节点发起复制操作，限制每次向新的主节点发起复制操作的从节点个数为1
+
+sentinel failover-timeout mymaster 180000 
+#故障转移超时时间为180000毫秒
+
+sentinel down-after-milliseconds mymaster 30000 
+#每个Sentinel节点都要定期PING命令来判断Redis数据节点和其余Sentinel节点是否可达，如果超过30000毫秒30s且没有回复，则判定不可达

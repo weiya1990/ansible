@@ -1,0 +1,4 @@
+- hosts: 
+  - redis-server
+  roles: 
+  - redis

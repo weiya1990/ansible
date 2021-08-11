@@ -1,0 +1,25 @@
+- name: 配置主从
+  lineinfile:
+    path: "/usr/local/redis/redis-{{ REDIS_PORT }}.conf"
+    line: "slaveof {{ redis_master_host }} {{ redis_master_port }}"
+  when: 
+  - redis_role is defined
+  - redis_role == "slave"
+
+- name: 配置密码
+  lineinfile: 
+    path: "/usr/local/redis/redis-{{ REDIS_PORT }}.conf"
+    line: "masterauth {{ REDIS_PASSWD }}"
+  when: 
+  - redis_role is defined
+  - redis_role == "slave"
+
+
+- name: 重启redis服务
+  systemd:
+    name: "redis-{{ REDIS_PORT }}"
+  when: 
+  - redis_role is defined
+  - redis_role == "slave"
+
+

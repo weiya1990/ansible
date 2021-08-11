@@ -1,0 +1,3 @@
+- include: install.yml
+- include: master-slave.yml
+- include: sentinel.yml
