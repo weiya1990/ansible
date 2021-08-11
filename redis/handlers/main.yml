@@ -1,2 +1,16 @@
 ---
 # handlers file for redis
+- name: restart redis-server
+  systemd:
+    name: "redis-{{ REDIS_PORT }}"
+    daemon_reload: yes
+    enabled: yes
+    state: restarted
+
+- name: restart sentinel-server
+  systemd:
+    name: "sentinel-{{ SENTINEL_PORT }}"
+    daemon_reload: yes
+    enabled: yes
+    state: restarted
+

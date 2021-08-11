@@ -13,13 +13,7 @@
   when: 
   - redis_role is defined
   - redis_role == "slave"
+  notify: restart redis-server
 
-
-- name: 重启redis服务
-  systemd:
-    name: "redis-{{ REDIS_PORT }}"
-  when: 
-  - redis_role is defined
-  - redis_role == "slave"
 
 

@@ -1,11 +1,11 @@
 #[test]
 #192.168.1.10  ansible_ssh_pass=1qaz2wsx pg_port=54321 disk_device=/dev/sda
 [redis-server]
-redis-server01 ansible_ssh_host=192.168.1.12  ansible_ssh_pass=1qaz2wsx REDIS_PORT=16379 redis_role=master
+redis-server01 ansible_ssh_host=192.168.1.12  ansible_ssh_pass=1qaz2wsx REDIS_PORT=16379 
 
-redis-server02 ansible_ssh_host=192.168.1.12  ansible_ssh_pass=1qaz2wsx REDIS_PORT=26379 redis_role=slave
+redis-server02 ansible_ssh_host=192.168.1.12  ansible_ssh_pass=1qaz2wsx REDIS_PORT=26379 
 
-redis-server03 ansible_ssh_host=192.168.1.12  ansible_ssh_pass=1qaz2wsx REDIS_PORT=36379 redis_role=slave
+redis-server03 ansible_ssh_host=192.168.1.12  ansible_ssh_pass=1qaz2wsx REDIS_PORT=36379 
 #[pg-uat-server]
 #47.103.153.188  ansible_ssh_pass=em41W0kPcZqes1EPFE0J
 # This is the default ansible 'hosts' file.
