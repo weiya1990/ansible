@@ -1,0 +1,13 @@
+#!/bin/bash
+
+EMAIL='{{ receiver_mail }}'
+DATE=`date +'%F_%T'`
+TITLE="`hostname` is $1 now"
+CONTENT="${DATE}: `hostname` to be $1"
+
+if (($1=='master'|'backup')); then
+   for i in $EMAIL
+    do
+    echo "${CONTENT}" | mail -s "${TITLE}" $i
+   done
+fi

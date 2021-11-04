@@ -1,0 +1,51 @@
+global_defs {
+   route_id LVS_DEVEL
+   vrrp_mcast_group4 224.26.1.1             
+}
+
+vrrp_script chk_nginx { 
+script "/etc/keepalived/nginx_check.sh" ##检查本地nginx是否存活脚本需要自己写，后面会有该脚本内容
+interval 2
+weight -20
+}
+
+#VIP1
+vrrp_instance VI_1 {
+{% if keepalived_role is defined and  keepalived_role == "master" %}
+state MASTER
+{% elif keepalived_role is undefined %}
+state BACKUP
+{% endif %}
+{% if interface is  not defined  %}
+interface ens33
+{% else %}
+interface {{ interface }}
+{% endif %}
+{% if interface is  not defined  %}
+lvs_sync_daemon_interface ens33
+{% else %}
+lvs_sync_daemon_interface {{ interface }}
+{% endif %}
+virtual_router_id {{ virtual_router_id.master }}
+{% if keepalived_role is defined and keepalived_role == "master" %}
+priority 100
+{% elif keepalived_role is undefined %}
+priority 90
+{% endif %}
+advert_int 5 #健康检测频率
+nopreempt
+authentication {
+auth_type PASS
+auth_pass 1111
+}
+virtual_ipaddress {
+{{ virtual_ipaddress }} ##VIP
+}
+track_script {
+chk_nginx
+}
+#配置邮件通知
+notify_master "/bin/bash /etc/keepalived/send_mail.sh master"
+notify_backup "/bin/bash /etc/keepalived/send_mail.sh backup"
+
+}
