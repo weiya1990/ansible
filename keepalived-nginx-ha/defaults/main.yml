@@ -9,7 +9,7 @@ virtual_router_id:
 virtual_ipaddress: 192.168.1.110
 
 #接收邮件地址
-receiver_mail: "1830624909@qq.com weiy@runsa.cn"
+receiver_mail: "xxxx@qq.com weiy@xxx.cn"
 
 #smtp配置
 smtp_config:
