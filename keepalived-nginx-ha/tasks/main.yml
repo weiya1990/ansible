@@ -1,4 +1,0 @@
----
-# tasks file for keepalived-nginx-ha
-- include: install.yml
-- include: config.yml
