@@ -75,4 +75,5 @@ sysctl:
   net.ipv4.tcp_max_tw_buckets: 6000 #表示系统同时保持TIME_WAIT的最大数量，如果超过这个数字，TIME_WAIT将立刻被清除并打印警告信息。默 认为180000，改为6000。对于Apache、Nginx等服务器，上几行的参数可以很好地减少TIME_WAIT套接字数量，但是对于Squid，效果却不大。此项参数可以控制TIME_WAIT的最大数量，避免Squid服务器被大量的TIME_WAIT拖死。
 
 ```
-
+## VIP切换邮件通知
+![image](https://user-images.githubusercontent.com/38902618/140270231-46437b01-5956-411e-87c6-9261f3607842.png)
