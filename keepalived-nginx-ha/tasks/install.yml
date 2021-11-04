@@ -1,0 +1,23 @@
+---
+- name: 安装epel源
+  package:
+    name: epel-release
+    state: present
+
+- name: 安装keepalived 
+  package:
+    name: keepalived
+    state: present
+
+- name: 安装nginx
+  package:
+    name: nginx
+    state: present
+
+- name: 安装邮件服务
+  package:
+    name: "{{ item }}"
+    state: present
+  loop:
+  - sendmail
+  - mailx
