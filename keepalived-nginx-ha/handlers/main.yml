@@ -1,0 +1,15 @@
+---
+# handlers file for keepalived-nginx-ha
+- name: restart keepalived
+  systemd:
+    name: keepalived 
+    state: restarted
+
+- name: reload nginx
+  command:
+    cmd: "nginx -s reload"
+    
+- name: restart sendmail
+  systemd:
+    name: sendmail
+    state: restarted
