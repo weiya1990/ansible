@@ -1,0 +1,57 @@
+---
+# tasks file for mongodb-standalone
+- name: yum源配置
+  yum_repository:
+    name: mongo-org
+    #baseurl: https://mirrors.tuna.tsinghua.edu.cn/mongodb/yum/el$releasever-{{ mongodb_version }}
+    baseurl: http://mirrors.aliyun.com/mongodb/yum/redhat/$releasever/mongodb-org/{{ mongodb_version }}/$basearch
+    file: mongo-org
+    description: mongodb for centos
+    gpgcheck: false
+
+- name: 安装mongodb-org
+  yum:
+    name: mongodb-org
+    state: present
+
+- name: 创建数据目录
+  file:
+    path: "{{ mongodb_data }}"
+    state: directory
+    owner: mongod
+    group: mongod
+
+- name: 配置mongo
+  template:
+    src: mongod.conf.j2
+    dest: /etc/mongod.conf
+
+- name: 启动mongogo
+  systemd:
+    name: mongod
+    state: started
+    enabled: yes
+
+- name: "初始化管理员用户"
+  mongodb_user:
+    name: "{{ admin_user }}"
+    password: "{{ admin_passwd}}"
+    login_host: localhost
+    login_port: "{{ mongodb_port}}"
+    database: admin
+    roles: userAdminAnyDatabase
+    state: present
+  ignore_errors: yes
+
+- name: 开启mongo认证
+  lineinfile:
+    path: /etc/mongod.conf
+    regexp: "^#security"
+    line: "security: \n  authorization: enabled"
+    state: present
+  notify:
+    restart mongod service
+
+
+
+

@@ -1,0 +1,11 @@
+---
+# defaults file for mongodb-standalone
+mongodb_version: 4.0
+mongodb_data: /opt/mongod/data
+journal_enable: "true"
+engine: wiredTiger
+cacheSizeGB: 2
+mongodb_port: 27017
+admin_user: admin
+admin_passwd: 123456
+

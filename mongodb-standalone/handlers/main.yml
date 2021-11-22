@@ -1,0 +1,6 @@
+---
+# handlers file for mongodb-standalone
+- name: restart mongod service
+  systemd:
+    name: mongod
+    state: restarted
